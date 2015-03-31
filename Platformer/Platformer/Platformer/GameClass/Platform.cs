@@ -59,9 +59,9 @@ namespace Platformer.GameClass
             return new Vector2(platformRect.X, platformRect.Y);
         }
 
-        public Boolean isCollision(Rectangle otherObjectRect)
+        public Boolean isCollision(Platform obj)
         {
-           return platformRect.Intersects(otherObjectRect);
+            return platformRect.Intersects(obj.getRectangle());
         }
     }
 }

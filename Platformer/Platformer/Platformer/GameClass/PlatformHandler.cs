@@ -37,7 +37,7 @@ namespace Platformer.GameClass
 
             for (int i = 0; i < platforms.Length; i++)
             {
-                platformPositions[i] = new Vector2(200 + (i * 100), 300);
+                platformPositions[i] = new Vector2(200 + (i * 200), 300);
                 platforms[i] = new Platform(platformTexture, platformSize, Color.Red);
             }
         }

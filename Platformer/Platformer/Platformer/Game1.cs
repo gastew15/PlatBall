@@ -20,6 +20,7 @@ namespace Platformer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         PlatformHandler platformHandler;
+        Ball ball1;
 
         public Game1()
         {
@@ -43,6 +44,8 @@ namespace Platformer
 
             platformHandler = new PlatformHandler();
             platformHandler.Initilize();
+
+            //ball1 = new Ball(new Vector2(300, 650), )
 
             base.Initialize();
         }

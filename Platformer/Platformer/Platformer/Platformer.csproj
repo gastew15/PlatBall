@@ -73,10 +73,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameClass\Background.cs" />
+    <Compile Include="GameClass\BackgroundHandler.cs" />
     <Compile Include="GameClass\Ball.cs" />
     <Compile Include="GameClass\Platform.cs" />
     <Compile Include="GameClass\PlatformHandler.cs" />
     <Compile Include="GameClass\PowerUp.cs" />
+    <Compile Include="GameClass\BackgroundBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />

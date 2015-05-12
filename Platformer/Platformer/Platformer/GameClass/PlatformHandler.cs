@@ -24,7 +24,7 @@ namespace Platformer.GameClass
 
         }
 
-        public void Initilize()
+        public void Initialize()
         {
             platforms = new Platform[maxNumberOfPlatforms];
             platformPositions = new Vector2[maxNumberOfPlatforms];

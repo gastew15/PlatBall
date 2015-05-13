@@ -13,10 +13,11 @@ namespace Platformer.GameClass
     {
         private Vector2 drawScale;
         private Texture2D platformTexture;
-        private int maxNumberOfPlatforms = 3;
-        private Platform[] platforms;
-        private Vector2[] platformPositions;
-        private double platformSpeed = 200; //pixels a second
+        private int maxNumberOfPlatforms = 6;
+        private int numberOfStartPlatforms = 3;
+        private List<Platform> platforms;
+        private List<Vector2> platformPositions;
+        private double platformSpeed = 150; //pixels a second
         private Vector2 platformSize = new Vector2(150, 40); //width, height
 
         public PlatformHandler()
@@ -26,8 +27,8 @@ namespace Platformer.GameClass
 
         public void Initialize()
         {
-            platforms = new Platform[maxNumberOfPlatforms];
-            platformPositions = new Vector2[maxNumberOfPlatforms];
+            platforms = new List<Platform>();
+            platformPositions = new List<Vector2>();
         }
 
         public void LoadContent(ContentManager Content)
@@ -35,10 +36,20 @@ namespace Platformer.GameClass
             platformTexture = Content.Load<Texture2D>("Textures/BlankTexture");
             Random rand = new Random();
 
-            for (int i = 0; i < platforms.Length; i++)
+            for (int i = 0; i < numberOfStartPlatforms; i++)
             {
-                platformPositions[i] = new Vector2(200 + (i * 200), 300);
-                platforms[i] = new Platform(platformTexture, platformSize, Color.Red);
+                platformPositions.Add(new Vector2(200 + (i * 200), 300));
+                platforms.Add(new Platform(platformTexture, platformSize, Color.Red));
+            }
+
+            if (maxNumberOfPlatforms > numberOfStartPlatforms)
+            {
+                //Generate other platforms using random junk generator
+                for (int i = 0; i <= maxNumberOfPlatforms - numberOfStartPlatforms; i++)
+                {
+                    platformPositions.Add(new Vector2(platformPositions[0].X -(i * 200), 300));
+                    platforms.Add(new Platform(platformTexture, platformSize, Color.Red));
+                }
             }
         }
 
@@ -47,32 +58,27 @@ namespace Platformer.GameClass
             this.drawScale = drawScale;
             Random rand = new Random();
 
-            for (int i = 0; i < platforms.Length; i++)
+            for (int i = 0; i < platforms.Count; i++)
             {
-                platforms[i].Update(gameTime, platformPositions[i]);
+                platforms[i].Update(gameTime, new Vector2(platformPositions[i].X * drawScale.X, platformPositions[i].Y * drawScale.Y));
+                platformPositions[i] = new Vector2(platformPositions[i].X + (float)(platformSpeed * gameTime.ElapsedGameTime.TotalSeconds), platformPositions[i].Y);
+
+                //Test
+                int screenWidth = 1080;
+                if (platformPositions[i].X * drawScale.X > screenWidth)
+                {
+                    //Replace with random generated
+                    platformPositions[i] = new Vector2(-platformSize.X - 50, 300);
+                }
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            for (int i = 0; i < platforms.Length; i++)
+            for (int i = 0; i < platforms.Count; i++)
             {
                 platforms[i].Draw(spriteBatch, drawScale);
             }
-        }
-
-        private int GeneratePositionY(int yLowerPosition, int yUpperPosition, int yVariationLimit)
-        {
-            Random random = new Random();
-
-            return yLowerPosition + yUpperPosition + random.Next(0, yVariationLimit);
-        }
-
-        private int GeneratePositionX(int xLowerPosition, int xUpperPosition, int xVariationLimit)
-        {
-            Random random = new Random();
-
-            return xLowerPosition + xUpperPosition + random.Next(0, xVariationLimit);
         }
     }
 }

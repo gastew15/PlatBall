@@ -25,6 +25,7 @@ namespace Platformer.GameClass
             this.texture = texture;
             this.radius = radius;
             this.color = color;
+            boundingBox = new Rectangle((int)position.X, (int)position.Y, (int)(radius * 2), (int)(radius * 2));
         }
 
         public void Update(GameTime gameTime, Vector2 drawScale)
@@ -33,6 +34,7 @@ namespace Platformer.GameClass
 
             position.Y -= (float)(velocity * drawScale.Y);
 
+            boundingBox = new Rectangle((int)position.X, (int)position.Y, (int)(radius * 2), (int)(radius * 2));
             velocity -= gravity;
         }
 
@@ -58,7 +60,14 @@ namespace Platformer.GameClass
 
         public Boolean isCollision(Platform obj)
         {
-            //return platformRect.Intersects(obj.getRectangle());
+            if (boundingBox.Intersects(obj.getRectangle()))
+            {
+                return true;
+
+                //Add in checking for actual sphere shape here and if not valid then return false
+                //return false;
+            }
+
             return false;
         }
     }

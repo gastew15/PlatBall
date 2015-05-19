@@ -73,6 +73,21 @@ namespace Platformer.GameClass
             }
         }
 
+        public Vector2 randPlatformPos(Rectangle lastPlatform, int maxPlatVarianceWidth, int maxPlatVarianceHeight)
+        {
+            Vector2 genPos = new Vector2();
+            Random rand = new Random();
+            int genNum;
+
+            genNum = rand.Next(-maxPlatVarianceWidth, maxPlatVarianceWidth);
+            genPos.X = (genNum * lastPlatform.Width) + lastPlatform.Width;
+            genPos.X = genPos.X - (1080 - genPos.X);
+            genNum = rand.Next(-maxPlatVarianceHeight, maxPlatVarianceHeight);
+            genPos.Y = (genNum * lastPlatform.Height) + lastPlatform.Y + lastPlatform.Height;
+
+            return genPos;
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < platforms.Count; i++)

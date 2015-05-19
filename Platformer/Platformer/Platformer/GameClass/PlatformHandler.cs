@@ -71,8 +71,6 @@ namespace Platformer.GameClass
                     //platformPositions[i] = new Vector2(-platformSize.X - 50, 300);
                     if (i > 0)
                         platformPositions[i] = randPlatformPos(new Rectangle((int)platformPositions[i - 1].X, (int)platformPositions[i - 1].Y, (int)platformSize.X, (int)platformSize.Y), 3, 4, screenSize, new Vector2(0, 100));
-                    else
-                        platformPositions[i] = randPlatformPos(new Rectangle((int)platformPositions[i].X, (int)platformPositions[i].Y, (int)platformSize.X, (int)platformSize.Y), 3, 4, screenSize, new Vector2(0, 100));
                 }
             }
         }
@@ -84,14 +82,22 @@ namespace Platformer.GameClass
             int genNum;
 
             genNum = rand.Next(-maxPlatVarianceWidth * 3, maxPlatVarianceWidth * 3);
-            genPos.X = -lastPlatform.Width - 50;//(genNum * lastPlatform.Width) + lastPlatform.Width;
+
+            if(lastPlatform.X > - lastPlatform.Width - 100)
+                genPos.X = -lastPlatform.Width - 50;//(genNum * lastPlatform.Width) + lastPlatform.Width;
+            else
+                genPos.X = lastPlatform.X - lastPlatform.Width - 50;
+
             if(lastPlatform.Y < boundSize.Y + 50)
                 genNum = rand.Next(0, maxPlatVarianceHeight * 3);
             else if(lastPlatform.Y > screenSize.Y - boundSize.Y - 50)
                 genNum = rand.Next(-maxPlatVarianceHeight * 3, 0);
             else
                 genNum = rand.Next(-maxPlatVarianceHeight * 3, maxPlatVarianceHeight * 3);
-            genPos.Y = ((genNum / 3) * lastPlatform.Height) + lastPlatform.Y + lastPlatform.Height;
+
+            genPos.Y = ((genNum / 3) * lastPlatform.Height) + lastPlatform.Y;
+            if (genPos.Y > 0)
+                genPos.Y += lastPlatform.Height;
 
             if (genPos.Y + lastPlatform.Height > screenSize.Y - boundSize.Y)
                 genPos.Y = screenSize.Y - boundSize.Y - lastPlatform.Height;

@@ -62,7 +62,7 @@ namespace Platformer
                 this.Exit();
             
             bBlock.Update(gameTime);
-            platformHandler.Update(gameTime, new Vector2(1, 1)); //Temp
+            platformHandler.Update(gameTime, new Vector2(1, 1)); //Temp Draw Scale
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
